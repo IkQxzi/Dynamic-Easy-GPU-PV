@@ -1,22 +1,49 @@
 ﻿$params = @{
     VMName = "GPUPV"
-    SourcePath = "C:\Users\james\Downloads\Win11_English_x64.iso"
+    # doesnt really matter
+
+    SourcePath = "D:\vmstuff\Everything For Vm\Easy-GPU-PV-main\Easy-GPU-PV-main\Win10_22H2_EnglishInternational_x64v1.iso"
+    # change to ur iso path
+    # download with rufus 3.5
+    # https://github.com/pbatard/rufus/releases/download/v3.5/rufus-3.5.exe
+    # https://www.nextofwindows.com/downloading-windows-10-iso-images-using-rufus
+
     Edition    = 6
     VhdFormat  = "VHDX"
     DiskLayout = "UEFI"
+    
     SizeBytes  = 40GB
-    MemoryAmount = 8GB
-    CPUCores = 4
-    NetworkSwitch = "Default Switch"
+    # it will only take up as much space as it uses, but no more than this amount
+
+    MemoryAmount = 8GB 
+    # i normally do a bit less than half, depends on what games u gonna play and what u gonna do on host
+
+    CPUCores = 4 
+    # cpu threads for vm (i would say give half and less than 2 is slow)
+
+    NetworkSwitch = "Default Switch" 
+    # make an external switch beforehand
+    # https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/get-started/create-a-virtual-switch-for-hyper-v-virtual-machines?tabs=hyper-v-manager
+
     VHDPath = "C:\Users\Public\Documents\Hyper-V\Virtual Hard Disks\"
-    UnattendPath = "$PSScriptRoot"+"\autounattend.xml"
+    # folder should exist already
+
+    UnattendPath = "$PSScriptRoot"+"\autounattend.xml" 
+    
     GPUName = "AUTO"
-    GPUResourceAllocationPercentage = 50
-    Team_ID = ""
-    Key = ""
-    Username = "GPUVM"
+    # gpu name exactly as it appears in device manager
+
+    Team_ID = "" 
+    Key = "" 
+    
+    Username = "GPUVM" 
+    # cannot be same as VMName
+
     Password = "CoolestPassword!"
+    # write it down somewhere
+    
     Autologon = "true"
+    # recommended
 }
 
 Import-Module $PSSCriptRoot\Add-VMGpuPartitionAdapterFiles.psm1
@@ -4311,8 +4338,7 @@ param (
 function Assign-VMGPUPartitionAdapter {
 param(
 [string]$VMName,
-[string]$GPUName,
-[decimal]$GPUResourceAllocationPercentage = 100
+[string]$GPUName
 )
     
     $PartitionableGPUList = Get-WmiObject -Class "Msvm_PartitionableGpu" -ComputerName $env:COMPUTERNAME -Namespace "ROOT\virtualization\v2" 
@@ -4326,12 +4352,11 @@ param(
         Add-VMGpuPartitionAdapter -VMName $VMName -InstancePath $DevicePathName
         }
 
-    [float]$devider = [math]::round($(100 / $GPUResourceAllocationPercentage),2)
-
-    Set-VMGpuPartitionAdapter -VMName $VMName -MinPartitionVRAM ([math]::round($(1000000000 / $devider))) -MaxPartitionVRAM ([math]::round($(1000000000 / $devider))) -OptimalPartitionVRAM ([math]::round($(1000000000 / $devider)))
-    Set-VMGPUPartitionAdapter -VMName $VMName -MinPartitionEncode ([math]::round($(18446744073709551615 / $devider))) -MaxPartitionEncode ([math]::round($(18446744073709551615 / $devider))) -OptimalPartitionEncode ([math]::round($(18446744073709551615 / $devider)))
-    Set-VMGpuPartitionAdapter -VMName $VMName -MinPartitionDecode ([math]::round($(1000000000 / $devider))) -MaxPartitionDecode ([math]::round($(1000000000 / $devider))) -OptimalPartitionDecode ([math]::round($(1000000000 / $devider)))
-    Set-VMGpuPartitionAdapter -VMName $VMName -MinPartitionCompute ([math]::round($(1000000000 / $devider))) -MaxPartitionCompute ([math]::round($(1000000000 / $devider))) -OptimalPartitionCompute ([math]::round($(1000000000 / $devider)))
+    "INFO   : ikq coded this part les go"
+    Set-VMGpuPartitionAdapter -VMName $VMName -MinPartitionVRAM 1 -MaxPartitionVRAM 1000000000 -OptimalPartitionVRAM 1000000000
+    Set-VMGPUPartitionAdapter -VMName $VMName -MinPartitionEncode 1 -MaxPartitionEncode 18446744073709551615 -OptimalPartitionEncode 18446744073709551615
+    Set-VMGpuPartitionAdapter -VMName $VMName -MinPartitionDecode 1 -MaxPartitionDecode 1000000000 -OptimalPartitionDecode 1000000000
+    Set-VMGpuPartitionAdapter -VMName $VMName -MinPartitionCompute 1 -MaxPartitionCompute 1000000000 -OptimalPartitionCompute 1000000000
 
 }
 
@@ -4348,7 +4373,6 @@ param(
 [int]$CPUCores,
 [string]$NetworkSwitch,
 [string]$GPUName,
-[float]$GPUResourceAllocationPercentage,
 [string]$SourcePath,
 [string]$Team_ID,
 [string]$Key,
@@ -4384,7 +4408,7 @@ param(
         Set-VMKeyProtector -VMName $VMName -NewLocalKeyProtector
         Enable-VMTPM -VMName $VMName 
         Add-VMDvdDrive -VMName $VMName -Path $SourcePath
-        Assign-VMGPUPartitionAdapter -GPUName $GPUName -VMName $VMName -GPUResourceAllocationPercentage $GPUResourceAllocationPercentage
+        Assign-VMGPUPartitionAdapter -GPUName $GPUName -VMName $VMName
         Write-Host "INFO   : Starting and connecting to VM"
         vmconnect localhost $VMName
         }
@@ -4396,6 +4420,8 @@ param(
 Check-Params @params
 
 New-GPUEnabledVM @params
+
+Set-VMVideo -VMName $VMName -HorizontalResolution 1920 -VerticalResolution 1080
 
 Start-VM -Name $params.VMName
 
