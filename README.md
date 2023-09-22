@@ -31,7 +31,7 @@ Dynamic-Easy-GPU-PV does the following...
 7. Run CopyFilesToVM.ps1 with your changes to the params section - this may take 5-10 minutes.
 8. Open and sign into Parsec on the VM.  You can use Parsec to connect to the VM up to 4K60FPS.
 * **DO NOT SKIP THE NEXT STEP OTHERWISE THE VM WILL TAKE UP ALL YOUR GPU RESOURCES**
-9. Download [Rivatuner Statistics server](https://ftp.nluug.nl/pub/games/PC/guru3d/afterburner/[Guru3D.com]-RTSS.zip) (comes packaged with, and recommended to install with, [MSI Afterburner](https://download.msi.com/uti_exe/vga/MSIAfterburnerSetup.zip?__token__=exp=1695535772~acl=/*~hmac=264a5dd8a3e37aa07ac8a6a8ebe11a6f488bdf7189585ee70aa181d6b7edbb0e)) and set the global framerate cap to 60
+9. Download [Rivatuner Statistics server](https://ftp.nluug.nl/pub/games/PC/guru3d/afterburner/[Guru3D.com]-RTSS.zip) (comes packaged with, and recommended to install with, [MSI Afterburner](https://download.msi.com/uti_exe/vga/MSIAfterburnerSetup.zip?__token__=exp=1695535772~acl=/*~hmac=264a5dd8a3e37aa07ac8a6a8ebe11a6f488bdf7189585ee70aa181d6b7edbb0e)) and set the global framerate cap to 60. (It may need to be capped lower on slower computers).
 10. You should be good to go!
 
 ### Upgrading GPU Drivers when you update the host GPU Drivers
@@ -73,6 +73,6 @@ It's important to update the VM GPU Drivers after you have updated the Host GPU'
 - If your computer is super fast it may get to the login screen before the audio driver (VB Cable) and Parsec display driver are installed, but fear not! They should soon install.  
 - The screen may go black for times up to 10 seconds in situations when UAC prompts appear, applications go in and out of fullscreen and when you switch between video codecs in Parsec - not really sure why this happens, it's unique to GPU-P machines and seems to recover faster at 1280x720.
 - Vulkan renderer is unavailable and GL games may or may not work.  [This](https://www.microsoft.com/en-us/p/opencl-and-opengl-compatibility-pack/9nqpsl29bfff?SilentAuth=1&wa=wsignin1.0#activetab=pivot:overviewtab) may help with some OpenGL apps.  
-- If you do not have administrator permissions on the machine it means you set the username and vmname to the same thing, these needs to be different.  
+- If you do not have administrator permissions on the machine it means you set the username and vmname to the same thing, these need to be different.  
 - AMD Polaris GPUs like the RX 580 do not support hardware video encoding via GPU Paravirtualization at this time.  
 - To download Windows ISOs with Rufus, it must have "Check for updates" enabled.
