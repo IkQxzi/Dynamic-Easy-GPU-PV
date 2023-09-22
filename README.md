@@ -31,7 +31,7 @@ Dynamic-Easy-GPU-PV does the following...
 7. Run CopyFilesToVM.ps1 with your changes to the params section - this may take 5-10 minutes.
 8. Open and sign into Parsec on the VM.  You can use Parsec to connect to the VM up to 4K60FPS.
 9. Download [Rivatuner Statisics server](https://ftp.nluug.nl/pub/games/PC/guru3d/afterburner/[Guru3D.com]-RTSS.zip) (comes packaged with, and recommended to install with, [MSI Afterburner](https://download.msi.com/uti_exe/vga/MSIAfterburnerSetup.zip?__token__=exp=1695535772~acl=/*~hmac=264a5dd8a3e37aa07ac8a6a8ebe11a6f488bdf7189585ee70aa181d6b7edbb0e)) and set the global fremerate cap to 60
-* **DO NOT SKIP THIS STEP OTHERWISE THE VM WILL TAKE UP ALL YOUR GPU RESOURCES**
+**DO NOT SKIP THIS STEP OTHERWISE THE VM WILL TAKE UP ALL YOUR GPU RESOURCES**
 10. You should be good to go!
 
 ### Upgrading GPU Drivers when you update the host GPU Drivers
