@@ -4400,7 +4400,7 @@ Check-Params @params
 
 New-GPUEnabledVM @params
 
-Set-VMVideo -VMName $VMName -HorizontalResolution 1920 -VerticalResolution 1080
+Set-VMVideo -VMName $params.VMName -HorizontalResolution 1920 -VerticalResolution 1080
 
 Start-VM -Name $params.VMName
 
