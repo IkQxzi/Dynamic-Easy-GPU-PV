@@ -1,49 +1,28 @@
 ﻿$params = @{
     VMName = "GPUPV"
-    # doesnt really matter
-
     SourcePath = "D:\vmstuff\Everything For Vm\Easy-GPU-PV-main\Easy-GPU-PV-main\Win10_22H2_EnglishInternational_x64v1.iso"
-    # change to ur iso path
-    # download with rufus 3.5
-    # https://github.com/pbatard/rufus/releases/download/v3.5/rufus-3.5.exe
-    # https://www.nextofwindows.com/downloading-windows-10-iso-images-using-rufus
-
     Edition    = 6
     VhdFormat  = "VHDX"
     DiskLayout = "UEFI"
-    
     SizeBytes  = 40GB
     # it will only take up as much space as it uses, but no more than this amount
-
     MemoryAmount = 8GB 
-    # i normally do a bit less than half, depends on what games u gonna play and what u gonna do on host
-
     CPUCores = 4 
-    # cpu threads for vm (i would say give half and less than 2 is slow)
-
     NetworkSwitch = "Default Switch" 
-    # make an external switch beforehand
-    # https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/get-started/create-a-virtual-switch-for-hyper-v-virtual-machines?tabs=hyper-v-manager
-
     VHDPath = "C:\Users\Public\Documents\Hyper-V\Virtual Hard Disks\"
-    # folder should exist already
+    # make sure a folder exists before running the code
 
     UnattendPath = "$PSScriptRoot"+"\autounattend.xml" 
-    
     GPUName = "AUTO"
     # gpu name exactly as it appears in device manager
 
     Team_ID = "" 
     Key = "" 
-    
     Username = "GPUVM" 
     # cannot be same as VMName
 
     Password = "CoolestPassword!"
-    # write it down somewhere
-    
     Autologon = "true"
-    # recommended
 }
 
 Import-Module $PSSCriptRoot\Add-VMGpuPartitionAdapterFiles.psm1
