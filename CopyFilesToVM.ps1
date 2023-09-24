@@ -4400,8 +4400,6 @@ Check-Params @params
 
 New-GPUEnabledVM @params
 
-Set-VMVideo -VMName $params.VMName -HorizontalResolution 1920 -VerticalResolution 1080
-
 Start-VM -Name $params.VMName
 
 SmartExit -ExitReason "If all went well the Virtual Machine will have started, 
